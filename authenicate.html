@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css" integrity="sha384-SI27wrMjH3ZZ89r4o+fGIJtnzkAnFs3E4qz9DIYioCQ5l9Rd/7UAa8DHcaL8jkWt" crossorigin="anonymous">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="css/register.css">
+</head>
+<body>
+        <div id="particles-js"></div>
+    <div class="card maincard border-bottom-0 mx-auto" style="max-width: 540px;">
+        <div class="card-body">
+            <nav class="nav nav-tabs">
+                    <a class="nav-item nav-link active" href="#nav-register" role="tab" data-toggle="tab" id="tab-register">Register</a>
+                    <a class="nav-item nav-link" href="#nav-login" role="tab" data-toggle="tab" id="tab-login">Login</a>
+            </nav>
+        </div>
+    </div>
+    <div class="tab-content" id="nav-tabcontent">
+        <div class="tab-pane fade show active" id="nav-register" role="tabpanel">
+            <div class="card regcard border-top-0 mx-auto" style="max-width: 540px;" id="register">
+                    <div class="card-body">
+                        <h4 class="card-title text-primary">Registration</h4><hr>
+                        <form class="form-signin" id="regForm" action="/reg" method="post">
+                                <div class="form-group">
+                                    <label for="uname">Name</label>
+                                    <input name="uname" type="text" class="form-control" placeholder="Name" >
+                                </div>
+                                <div class="form-group">
+                                        <label for="regno">Registration Number</label>
+                                        <input name="regno" type="text" class="form-control" placeholder="Eg:B170509EC" >
+                                </div>
+                                <div class="form-group">
+                                        <label for="pass">Password</label>
+                                        <input name="pass" type="password" class="form-control" >
+                                </div>
+                                <div class="form-group">
+                                        <label for="passagain">Enter Password Again</label>
+                                        <input id="passagain" type="password" class="form-control" >
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+            </div>  
+        </div>
+
+        <div class="tab-pane fade" id="nav-login" role="tabpanel">
+            <div class="card regcard border-top-0 mx-auto" style="max-width: 540px;" id="login-card">
+                    <div class="card-body">
+                        <h4 class="card-title text-primary">Login</h4><hr>
+                        <form class="form-signin" id="regForm" action="/reg" method="post">
+                                <div class="form-group">
+                                        <label for="regno">Registration Number</label>
+                                        <input name="regno" type="text" class="form-control" >
+                                </div>
+                                <div class="form-group">
+                                        <label for="pass">Password</label>
+                                        <input name="pass" type="password" class="form-control" >
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+            </div> 
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js" integrity="sha384-3qaqj0lc6sV/qpzrc1N5DC6i1VRn/HyX4qdPaiEFbn54VjQBEU341pvjz7Dv3n6P" crossorigin="anonymous"></script>
+    <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="js/particles.js"></script>
+</body>
