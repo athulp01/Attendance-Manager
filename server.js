@@ -14,4 +14,4 @@ app.use(function(req, res, next) {
 });
 app.post('/reg', authenication.register)
 
-app.listen(5000)
+app.listen(process.env.PORT)
