@@ -21,13 +21,10 @@ exports.register = (req, res) => {
     conn.query(qry, (error, result , fields) => {
         if(error) {
             console.log("error", error)
-            res.send({
-                "code":400
-            })
+            res.send("not cool")
         } else {
-            res.send({
-                "code":200
-            })
+            
+            res.send("cool")
         }
     })
 }
