@@ -15,7 +15,7 @@ variables:
   webAppName: 'Attendance-Manager'
   
   # Environment name
-  environmentName: ''
+  environmentName: 'node'
 
   # Agent VM image name
   vmImageName: 'debian'
