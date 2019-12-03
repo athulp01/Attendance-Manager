@@ -10,7 +10,11 @@ var app = express()
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
 app.use(express.static(__dirname))
-
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 app.use(session({               //cookie with key userID is used
     name: '_amanager',
     resave: true,
@@ -145,7 +149,7 @@ var home = function(req, res, next) {
                     console.log(err)
                     res.sendStatus(500)
                 }else if(Cresult == null) {
-                    res.redirect('../auth.html')
+                    res.render('profile', {user:Cresult.username})
                 }else {
                     console.log(Cresult)
                     res.render('home', {user:req.session.userName, courses:Cresult.courses})
