@@ -149,7 +149,7 @@ var home = function(req, res, next) {
                     console.log(err)
                     res.sendStatus(500)
                 }else if(Cresult == null) {
-                    res.render('profile', {user:Cresult.username})
+                    res.render('profile', {user:req.session.userName})
                 }else {
                     console.log(Cresult)
                     res.render('home', {user:req.session.userName, courses:Cresult.courses})
