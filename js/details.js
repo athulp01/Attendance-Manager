@@ -15,7 +15,7 @@ function addCourse() {
         })
         $('#course-list').append(`<li class="list-group-item d-flex justify-content-between align-items-center">
                                     ${course_name}
-                                    <span class="badge badge-primary badge-pill">0f</span>
+                                    <span class="badge badge-primary badge-pill">0</span>
                                     </li>`)
         $('#input-course').val('')
     })

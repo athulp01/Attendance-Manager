@@ -4,7 +4,7 @@ $(document).ready(function() {
     $('#regForm').submit((event) => {
         $.ajax({
             type    :   'POST',
-            url     :   '/reg',
+            url     :   '/register',
             data    :   $("#regForm").serialize(),
             success :   function(res) {
                 $('.toast').toast("show")
