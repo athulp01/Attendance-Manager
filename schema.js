@@ -1,6 +1,6 @@
 var mongoose = require('mongoose')
 
-mongoose.connect('mongodb://localhost/amanager', {
+mongoose.connect(`mongodb+srv://athul:${process.env.db_pass}@cluster0-k1eqt.azure.mongodb.net/test?retryWrites=true&w=majority/amanager`, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
