@@ -47,7 +47,7 @@ var login = function(req, res) {
                     console.log(err)
                     res.sendStatus(500)
                 }else if(Cresult == null) {
-                    res.redirect('../auth.html')
+                    res.render('profile', {user:result.username})
                 }else {
                     console.log(Cresult)
                     res.render('home', {user:result.username, courses:Cresult.courses})

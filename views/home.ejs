@@ -48,6 +48,7 @@
                         </div>
                 </div>
                 <div class="row row-cols-lg-3 row-cols-sm-2">
+                        <% if(locals.courses) { %>
                         <% courses.forEach((course) => { %>
                         <div class="col mb-4">
                                 <div class="card att-card  my-5 shadow-lg" style="max-width: 500px;" onclick="showModal(this)" id="<%= course.name%>-name">
@@ -59,7 +60,7 @@
                                         </div>
                                 </div>
                         </div>
-                        <% }); %>
+                        <% });} %>
                 </div>
                 <div class="modal fade" id="modalBunk" tabindex="-1" role="dialog" >
                         <div class="modal-dialog modal-dialog-centered" role="document">
