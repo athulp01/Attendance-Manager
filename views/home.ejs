@@ -13,7 +13,7 @@
                         <div class="col" >
                                 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
                                         <a class="navbar-brand" href="#">
-                                                <img src="/img/icon.svg" width="30" height="30"/>
+                                                <img src="/img/image.png" width="30" height="30"/>
                                                 Attendance Managment</a>
                                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                                                 <span class="navbar-toggler-icon"></span>
@@ -38,6 +38,7 @@
                                 </nav>
                         </div>
                 </div>
+
                 <div class="row">
                         <div class="col-12">
                                 <div class="jumbotron-fluid" style="padding-top: 50px;">
@@ -47,11 +48,11 @@
                                 </div>
                         </div>
                 </div>
-                <div class="row row-cols-lg-3 row-cols-sm-2">
+                <div class="row row-cols-2 row-cols-md-3">
                         <% if(locals.courses) { %>
                         <% courses.forEach((course) => { %>
                         <div class="col mb-4">
-                                <div class="card att-card  my-5 shadow-lg" style="max-width: 500px;" onclick="showModal(this)" id="<%= course.name%>-name">
+                                <div class="card att-card  my-5 shadow-lg" onclick="showModal(this)" id="<%= course.name%>-name">
                                         <div class="card-header att-head rounded">
                                                 <h6 class="card-title" id="title1"> <%= course.name %> </h6>
                                         </div>

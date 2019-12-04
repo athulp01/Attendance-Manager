@@ -36,27 +36,31 @@ var course_data = [
 var login = function(req, res) {
     console.log(req.body.regno)
     model.user.findOne({reg_number: req.body.regno}, (err, result) => {
-        console.log(result)
         if(err) {
             console.log(err)
             res.sendStatus(500)
         }else if(result == null) {
             res.sendStatus(401)
         }else {
-                req.session.userID = result._id
-                req.session.userName= result.username
-                req.session.regNo = result.reg_number
-                model.course.findOne({Uid: result._id}, (err, Cresult) => {
-                if(err) {
-                    console.log(err)
-                    res.sendStatus(500)
-                }else if(Cresult == null) {
-                    res.render('profile', {user:result.username})
+                console.log(req.body.pass,  result.password)
+                if(req.body.pass != result.password) {
+                    res.sendStatus(401)
                 }else {
-                    console.log(Cresult)
-                    res.render('home', {user:result.username, courses:Cresult.courses})
-                }
-            })
+                    req.session.userID = result._id
+                    req.session.userName= result.username
+                    req.session.regNo = result.reg_number
+                    model.course.findOne({Uid: result._id}, (err, Cresult) => {
+                    if(err) {
+                        console.log(err)
+                        res.sendStatus(500)
+                    }else if(Cresult == null) {
+                        res.render('profile', {user:result.username})
+                    }else {
+                        console.log(Cresult)
+                        res.render('home', {user:result.username, courses:Cresult.courses})
+                    }
+                })
+            }
         }
     })
 }
@@ -104,13 +108,14 @@ var addcourse = function(req, res, next) {
                         console.log(ret['courses'])         //TODO: append to courses array
                         ret.courses.push(courseData['courses'])
                         ret.save()
+                        res.sendStatus(200)
                     } else {
                         model.course.create(courseData, (err, usr) => {
                             if(err) {
                                 console.log(err)
                                 res.sendStatus(500)
                             }else {
-                                res.sendStatus(201)
+                                res.sendStatus(200)
                             }
                         })
                     }
@@ -177,7 +182,6 @@ var bunk = function(req, res, next) {
     console.log(req.session.userID)
     console.log(req.body.name)
     model.course.updateOne({Uid:req.session.userID, "courses.name":req.body.name}, {$inc:{"courses.$.no_bunked":1}}, (err, result) => {
-        console.log(result)
         if(err) {
             console.log(err)
             res.sendStatus(500)
@@ -202,6 +206,37 @@ var logout = function(req, res) {
       }
 }
 
+var removeCourse = function(req, res) {
+    console.log(req.body)
+    model.course.updateOne({Uid:req.session.userID}, {$pull: {courses: {name:req.body.name}}}, (err, result) => {
+        console.log(result)
+        if(err) {
+            console.log(err)
+            res.sendStatus(500)
+        }else if(result == null) {
+            res.sendStatus(500)
+        }else {
+            console.log(result)
+            res.sendStatus(200)
+        }
+    })
+}
+
+var editCourse = function(req, res) {
+    courses.updateOne({Uid:req.session.userID, "courses.name":req.body.name}, {$set:{"courses.$.no_bunked":req.body.num}}, (err, result) => {
+        console.log(result)
+        if(err) {
+            console.log(err)
+            res.sendStatus(500)
+        }else if(result == null) {
+            res.sendStatus(500)
+        }else {
+            console.log(result)
+            res.sendStatus(200)
+        }
+    })
+}
+
 var authRoute = express.Router()
 authRoute.use(checkForSession)
 
@@ -218,6 +253,8 @@ authRoute.post('/addcourse', addcourse)
 authRoute.get('/profile', profile)
 authRoute.post('/bunk', bunk)
 authRoute.get('/logout', logout)
+authRoute.post('/removecourse', removeCourse)
+authRoute.post('/editcourse', editCourse)
 
 app.get('/getCookie', (req,res) => {
     res.send(req.session.userID)
