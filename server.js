@@ -9,12 +9,8 @@ var app = express()
 
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
-app.use(express.static(__dirname))
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
+app.use(express.static(__dirname, {extensions:'html'}))
+
 app.use(session({               //cookie with key userID is used
     name: '_amanager',
     resave: true,
@@ -70,9 +66,9 @@ var register = function(req, res, next) {
         let userData = {
             reg_number : req.body.regno,
             username : req.body.uname,
-            password : req.body.pass
+            password : req.body.pass[0]
         }
-
+        console.log(userData)
         model.user.create(userData, (err, usr)=> {
             if(err) {
                 console.log(err)
@@ -100,7 +96,7 @@ var addcourse = function(req, res, next) {
                     Uid     :    id,
                     courses :    {
                         name        :  req.body.name,
-                        no_bunked   :  Number(req.body.num)
+                        no_bunked   :  Number(req.body.num),
                     }}
                 console.log(courseData)
                 model.course.findOne({Uid:id}, (err, ret)=> {
@@ -129,14 +125,14 @@ var checkForSession = function(req, res, next) {
     let id = req.session.userID
     console.log(id)
     if(id == null) {
-        res.redirect('../auth.html')
+        res.redirect('../auth')
     }else {
         model.user.findById(id, (err, result) => {
             if(err) {
                 console.log(err)
                 res.sendStatus(500)
             }else if(result == null) {
-                res.redirect('../auth.html')
+                res.redirect('../auth')
             }else {
                 next()
             }
@@ -147,7 +143,7 @@ var checkForSession = function(req, res, next) {
 var home = function(req, res, next) {
     console.log(req.session.userID)
     if(req.session.userID == null) {
-        res.redirect('../auth.html')
+        res.redirect('../auth')
         }else {
             model.course.findOne({Uid: req.session.userID}, (err, Cresult) => {
                 if(err) {
@@ -170,7 +166,7 @@ var profile = function(req, res, next) {
             console.log(err)
             res.sendStatus(500)
         }else if(Cresult == null) {
-            res.redirect('../auth.html')
+            res.redirect('../auth')
         }else {
             console.log(Cresult)
             res.render('profile', {user:req.session.userName, courses:Cresult.courses})
@@ -181,7 +177,7 @@ var profile = function(req, res, next) {
 var bunk = function(req, res, next) {
     console.log(req.session.userID)
     console.log(req.body.name)
-    model.course.updateOne({Uid:req.session.userID, "courses.name":req.body.name}, {$inc:{"courses.$.no_bunked":1}}, (err, result) => {
+    model.course.updateOne({Uid:req.session.userID, "courses.name":req.body.name}, {$inc:{"courses.$.no_bunked":1},$push:{"courses.$.date_bunked":new Date()}}, (err, result) => {
         if(err) {
             console.log(err)
             res.sendStatus(500)
@@ -223,7 +219,8 @@ var removeCourse = function(req, res) {
 }
 
 var editCourse = function(req, res) {
-    courses.updateOne({Uid:req.session.userID, "courses.name":req.body.name}, {$set:{"courses.$.no_bunked":req.body.num}}, (err, result) => {
+    console.log(req.body)
+    model.course.updateOne({Uid:req.session.userID, "courses.name":req.body.name}, {$set:{"courses.$.no_bunked":req.body.num}}, (err, result) => {
         console.log(result)
         if(err) {
             console.log(err)
@@ -237,6 +234,19 @@ var editCourse = function(req, res) {
     })
 }
 
+var getReport = function(req, res) {
+    model.course.findOne({Uid:req.session.userID}, (err, result) => {
+        if(err) {
+            console.log(err)
+            res.sendStatus(500)
+        }else if(result == null) {
+            res.sendStatus(500)
+        }else {
+            console.log(result)
+            res.render('report', {user:req.session.userName,courses:result.courses})
+        }
+    })
+}
 var authRoute = express.Router()
 authRoute.use(checkForSession)
 
@@ -255,6 +265,7 @@ authRoute.post('/bunk', bunk)
 authRoute.get('/logout', logout)
 authRoute.post('/removecourse', removeCourse)
 authRoute.post('/editcourse', editCourse)
+authRoute.get('/report', getReport)
 
 app.get('/getCookie', (req,res) => {
     res.send(req.session.userID)

@@ -37,7 +37,10 @@ var courseSchema = new mongoose.Schema({
         },
         no_bunked: {
             type: Number,
-        }
+        },
+        date_bunked: [{
+            type: Date
+        }]
     }]
 })
 

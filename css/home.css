@@ -18,3 +18,19 @@
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 }
+
+.nav-link {
+  color: black;
+}
+
+.navbar-dark {
+  background-color: rgb(0, 0, 0);
+}
+
+body {
+  background-color: rgb(255, 255, 255);
+}
+
+
+
+

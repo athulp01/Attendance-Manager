@@ -10,7 +10,6 @@ $("#form-add").submit(function(event) {
         url     :   '/u/addcourse',
         data    :   Cdata,
         success :   function(res) {
-            alert("s")
         }
         
     })

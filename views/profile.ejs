@@ -3,8 +3,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css" integrity="sha384-SI27wrMjH3ZZ89r4o+fGIJtnzkAnFs3E4qz9DIYioCQ5l9Rd/7UAa8DHcaL8jkWt" crossorigin="anonymous">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" href="../css/register.css">
-        <link rel="stylesheet" href="../css/main.css">
+        <link rel="stylesheet" href="../css/home.css">
 
 </head>
 <body>
@@ -14,7 +13,7 @@
                                 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
                                         <a class="navbar-brand" href="#">
                                                 <img src="/img/image.png" width="30" height="30"/>
-                                                Attendance Managment</a>
+                                                Attendance Manager</a>
                                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                                                 <span class="navbar-toggler-icon"></span>
                                         </button>
@@ -27,7 +26,7 @@
                                                         <a class="nav-link" href="/u/profile">Courses</a>
                                                 </li>
                                                 <li class="nav-item">
-                                                        <a class="nav-link" href="#">Report</a>
+                                                        <a class="nav-link" href="/u/report">Report</a>
                                                 </li>
                                                 <li class="nav-item">
                                                         <a class="nav-link" href="/u/logout">Logout</a>
@@ -41,7 +40,7 @@
                         <div class="col-12">
                                 <div class="jumbotron-fluid" style="padding-top: 50px;">
                                         <h5 class="display-4">Hello, <%= user %>!</h5>
-                                        <p class="lead">Welcome to Attendance Manager. Here you can view your currently enrolled courses and add new, if any.</p>
+                                        <p class="lead">Welcome to Attendance Manager. Here you can view, add, or remove new coures.</p>
                                         <hr class="my-4">
                                 </div>
                         </div>
@@ -67,14 +66,9 @@
                         <div class="col-12 mt-5">
                                 <h4>Add a course</h4>
                                 <form id="form-add">
-                                        <div class="form-group">
-                                                <input type="text" class="form-control" placeholder="Course Name" id="input-course" required>
-                                        </div>
-                                        <div class="form-group">
-                                                <input type="number" class="form-control" placeholder="Maximum number of classes you can bunk" id="input-course" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-success">Add course</button>
+                                        <div class="input-group">
+                                                        <input type="text" class="form-control" placeholder="Course Name" id="input-course" required>                                                        
+                                                        <button type="submit" class="btn btn-success">Add course</button>                                                        
                                         </div>
                                 </form>
                         </div>
@@ -83,16 +77,15 @@
                         <div class="col-12 mt-5">
                                 <h4>Remove a course</h4>
                                 <form id="form-remove">
-                                        <div class="form-group">
+                                        <div class="input-group">
                                                 <select class="form-control" name="name">
                                                         <option selected disabled>Select the course which you want to remove</option>
+                                                        <% if(locals.courses) { %>
                                                         <% courses.forEach((course)=>{ %>
                                                         <option><%= course.name %></option>
-                                                        <% }); %>
+                                                        <% }); }%>
                                                 </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-danger" id="btn-remove">Remove course</button>
+                                                        <button type="submit" class="btn btn-danger" id="btn-remove">Remove course</button>
                                         </div>
                                 </form>
                         </div>
@@ -101,18 +94,20 @@
                 <div class="row">
                         <div class="col-12 mt-5">
                                 <h4>Edit attendance</h4>
-                                <form id="form-edit" onsubmit="editCourse()">
-                                        <div class="form-group">
+                                <form id="form-edit " onsubmit="editCourse()">
+                                        <div class="input-group">
                                                 <select name = "name" class="form-control" id="course-select-edit">
                                                         <option selected disabled>Select the course which you want to remove</option>
+                                                        <% if(locals.courses) { %>
                                                         <% courses.forEach((course)=>{ %>
                                                         <option><%= course.name %></option>
-                                                        <% }); %>
+                                                        <% }); }%>
                                                 </select>
                                         </div>
+                                        <br>
                                         <div class="form-group form-inline">
                                                 <input name="num" class="form-control" type="number" id="change-num">
-                                                <button type="submit" class="btn btn-info" id="btn-change">Change</button>
+                                                <button type="submit" class="btn btn-info" id="btn-change" disabled>Change</button>
                                         </div>
                                 </form>
                         </div>
@@ -122,5 +117,5 @@
         <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js" integrity="sha384-3qaqj0lc6sV/qpzrc1N5DC6i1VRn/HyX4qdPaiEFbn54VjQBEU341pvjz7Dv3n6P" crossorigin="anonymous"></script>
-        <script src="../js/details.js"></script>
+        <script src="../js/profile.js"></script>
 </body>
