@@ -32,7 +32,7 @@ let course_data = [
 let login = function(req, res) {
   model.user.findOne({reg_number: req.body.regno}, (err, result) => {
     if (err) {
-      console.log(err);
+      console.error(err);
       res.sendStatus(500);
     } else if (result == null) {
       res.sendStatus(401);
@@ -43,7 +43,6 @@ let login = function(req, res) {
         req.session.userID = result._id;
         req.session.userName= result.username;
         req.session.regNo = result.reg_number;
-        console.log("success");
         res.sendStatus(200);
       }
     }
@@ -57,10 +56,9 @@ let register = function(req, res, next) {
       username: req.body.uname,
       password: req.body.pass[0],
     };
-    console.log(userData);
     model.user.create(userData, (err, usr)=> {
       if (err) {
-        console.log(err);
+        console.error(err);
         res.sendStatus(409);
       } else {
         res.sendStatus(201);
@@ -75,7 +73,7 @@ let addcourse = function(req, res, next) {
   const id = req.session.userID;
   model.user.findById(id, (err, result)=> { // TODO: Possibly redudant check
     if (err) {
-      console.log(err);
+      console.error(err);
       res.sendStatus(500);
     } else {
       if (result == null ) {
@@ -87,17 +85,15 @@ let addcourse = function(req, res, next) {
             name: req.body.name,
             no_bunked: Number(req.body.num),
           }};
-        console.log(courseData);
         model.course.findOne({Uid: id}, (err, ret)=> {
           if (ret != null) {
-            console.log(ret['courses']); // TODO: append to courses array
             ret.courses.push(courseData['courses']);
             ret.save();
             res.sendStatus(200);
           } else {
             model.course.create(courseData, (err, usr) => {
               if (err) {
-                console.log(err);
+                console.error(err);
                 res.sendStatus(500);
               } else {
                 res.sendStatus(200);
@@ -112,13 +108,12 @@ let addcourse = function(req, res, next) {
 
 let checkForSession = function(req, res, next) {
   const id = req.session.userID;
-  console.log(id);
   if (id == null) {
     res.redirect('../auth');
   } else {
     model.user.findById(id, (err, result) => {
       if (err) {
-        console.log(err);
+        console.error(err);
         res.sendStatus(500);
       } else if (result == null) {
         res.redirect('../auth');
@@ -130,18 +125,16 @@ let checkForSession = function(req, res, next) {
 };
 
 let home = function(req, res, next) {
-  console.log(req.session.userID);
   if (req.session.userID == null) {
     res.redirect('../auth');
   } else {
     model.course.findOne({Uid: req.session.userID}, (err, Cresult) => {
       if (err) {
-        console.log(err);
+        console.error(err);
         res.sendStatus(500);
       } else if (Cresult == null) {
         res.render('profile', {user: req.session.userName});
       } else {
-        console.log(Cresult);
         res.render('home', {user: req.session.userName, courses: Cresult.courses});
       }
     });
@@ -151,28 +144,24 @@ let home = function(req, res, next) {
 let profile = function(req, res, next) {
   model.course.findOne({Uid: req.session.userID}, (err, Cresult) => {
     if (err) {
-      console.log(err);
+      console.error(err);
       res.sendStatus(500);
     } else if (Cresult == null) {
       res.redirect('../auth');
     } else {
-      console.log(Cresult);
       res.render('profile', {user: req.session.userName, courses: Cresult.courses});
     }
   });
 };
 
 let bunk = function(req, res, next) {
-  console.log(req.session.userID);
-  console.log(req.body.name);
   model.course.updateOne({'Uid': req.session.userID, 'courses.name': req.body.name}, {$inc: {'courses.$.no_bunked': 1}, $push: {'courses.$.date_bunked': new Date()}}, (err, result) => {
     if (err) {
-      console.log(err);
+      console.error(err);
       res.sendStatus(500);
     } else if (result == null) {
       res.sendStatus(500);
     } else {
-      console.log(result);
       res.sendStatus(200);
     }
   });
@@ -191,32 +180,26 @@ let logout = function(req, res) {
 };
 
 let removeCourse = function(req, res) {
-  console.log(req.body);
   model.course.updateOne({Uid: req.session.userID}, {$pull: {courses: {name: req.body.name}}}, (err, result) => {
-    console.log(result);
     if (err) {
-      console.log(err);
+      console.error(err);
       res.sendStatus(500);
     } else if (result == null) {
       res.sendStatus(500);
     } else {
-      console.log(result);
       res.sendStatus(200);
     }
   });
 };
 
 let editCourse = function(req, res) {
-  console.log(req.body);
   model.course.updateOne({'Uid': req.session.userID, 'courses.name': req.body.name}, {$set: {'courses.$.no_bunked': req.body.num}}, (err, result) => {
-    console.log(result);
     if (err) {
-      console.log(err);
+      console.error(err)
       res.sendStatus(500);
     } else if (result == null) {
       res.sendStatus(500);
     } else {
-      console.log(result);
       res.sendStatus(200);
     }
   });
@@ -225,12 +208,11 @@ let editCourse = function(req, res) {
 let getReport = function(req, res) {
   model.course.findOne({Uid: req.session.userID}, (err, result) => {
     if (err) {
-      console.log(err);
+      console.error(err);
       res.sendStatus(500);
     } else if (result == null) {
       res.sendStatus(500);
     } else {
-      console.log(result);
       res.render('report', {user: req.session.userName, courses: result.courses});
     }
   });

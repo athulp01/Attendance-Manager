@@ -36,8 +36,8 @@ $(document).ready(function() {
 
 $('#loginForm').submit((event) => {
     event.preventDefault();
-    $('#reg-btn').prop('disabled', true);
-    $('#reg-btn').html(
+    $('#login-btn').prop('disabled', true);
+    $('#login-btn').html(
         `<span class="spinner-border spinner-border-sm" role="status" ">
         </span> Logging in...`);
     $.ajax({
