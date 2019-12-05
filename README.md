@@ -13,5 +13,5 @@ A Web site to keep track of your attendance. Webapp is deployed at https://atten
 ## Screenshots
 
 ![Home](/img/home.png)
-![Profile] (/img/profile.png)
-![Report] (/img/report.png)
+![Profile](/img/profile.png)
+![Report](/img/report.png)
