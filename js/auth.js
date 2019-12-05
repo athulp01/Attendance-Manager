@@ -51,7 +51,7 @@ $('#loginForm').submit((event) => {
           $('#loginForm').trigger('reset');
         } else {
           let tmp = window.location.href.split('/');
-          window.location.href = `http://${tmp[2]}/u/`;
+          window.location.href = `https://${tmp[2]}/u/`;
         }
       },
     });
