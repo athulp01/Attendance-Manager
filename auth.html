@@ -11,9 +11,19 @@
                 <div class="row">
                         <div class="col-6 mx-auto mt-2 ">
                                 <div class="alert alert-danger collapse" id="mismatch-alert" role="alert">Username or password is not correct. Try again!</div>
+                                <div class="toast mx-auto" id="successtoast" data-delay = "3000" style="z-index: 15;">
+                                                <div class="toast-header">
+                                                        <strong class="mr-auto">Successfull!</strong>
+                                                        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">
+                                                        </button>
+                                                </div>
+                                                <div class="toast-body">
+                                                                Registration Successfull! Please login to continue
+                                                </div>
+                                </div>
                         </div>
+
                 </div>
-                
                 <div class="row">
                         <div class="col-12">
                                 <div class="card maincard border-bottom-0 mx-auto mt-5" style="max-width: 540px;">
@@ -53,7 +63,6 @@
                                                 </div>
                                         </div>  
                                         </div>
-                        
                                         <div class="tab-pane fade" id="nav-login" role="tabpanel">
                                         <div class="card regcard border-top-0 mx-auto" style="max-width: 540px;" id="login-card">
                                                 <div class="card-body">
@@ -74,16 +83,6 @@
                                         </div>
                                 </div>    
                         </div>
-                </div>
-                <div class="toast" id="successtoast" data-delay = "3000" style="position: absolute; top: 0; right: 0;">
-                                <div class="toast-header">
-                                        <strong class="mr-auto">Successfull!</strong>
-                                        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                                        </button>
-                                </div>
-                                <div class="toast-body">
-                                                Registration Successfull! Please login to continue
-                                </div>
                 </div>
         </div>
         
