@@ -14,9 +14,20 @@
   border-bottom-right-radius: 15px;
 }
 
+h6 {
+  -webkit-user-select: none; /* Safari */        
+-moz-user-select: none; /* Firefox */
+-ms-user-select: none; /* IE10+/Edge */
+user-select: none; /* Standard */
+}
+
 .att-card {
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
+  -webkit-user-select: none; /* Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
 }
 
 .nav-link {

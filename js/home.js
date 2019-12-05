@@ -26,7 +26,7 @@ function bunk() {
     data: data,
     success: function(res) {
       $('#modalBunk').modal('hide');
-      $(`#${name}-num`).text(`${num} classes bunked!`);
+      location.reload();
     },
   });
 }
