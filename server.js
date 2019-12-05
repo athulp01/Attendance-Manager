@@ -30,7 +30,6 @@ let course_data = [
 ];
 
 let login = function(req, res) {
-  console.log(req.body.regno);
   model.user.findOne({reg_number: req.body.regno}, (err, result) => {
     if (err) {
       console.log(err);
@@ -38,24 +37,14 @@ let login = function(req, res) {
     } else if (result == null) {
       res.sendStatus(401);
     } else {
-      console.log(req.body.pass, result.password);
       if (req.body.pass != result.password) {
         res.sendStatus(401);
       } else {
         req.session.userID = result._id;
         req.session.userName= result.username;
         req.session.regNo = result.reg_number;
-        model.course.findOne({Uid: result._id}, (err, Cresult) => {
-          if (err) {
-            console.log(err);
-            res.sendStatus(500);
-          } else if (Cresult == null) {
-            res.render('profile', {user: result.username});
-          } else {
-            console.log(Cresult);
-            res.render('home', {user: result.username, courses: Cresult.courses});
-          }
-        });
+        console.log("success");
+        res.sendStatus(200);
       }
     }
   });
@@ -72,7 +61,7 @@ let register = function(req, res, next) {
     model.user.create(userData, (err, usr)=> {
       if (err) {
         console.log(err);
-        res.sendStatus(500);
+        res.sendStatus(409);
       } else {
         res.sendStatus(201);
       }

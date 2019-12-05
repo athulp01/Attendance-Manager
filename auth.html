@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <head>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css" integrity="sha384-SI27wrMjH3ZZ89r4o+fGIJtnzkAnFs3E4qz9DIYioCQ5l9Rd/7UAa8DHcaL8jkWt" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="/css/auth.css">
@@ -22,26 +23,12 @@
         <meta property="twitter:title" content="Attendance Manager">
         <meta property="twitter:description" content="Easily keep track of your course attendance.">
         <meta property="twitter:image" content="/img/meta.png">
+        <script src="https://kit.fontawesome.com/d82ca3f854.js" crossorigin="anonymous"></script>
+
 </head>
 <body>
         <div id="particles-js"></div>
         <div class="container">
-                <div class="row">
-                        <div class="col-6 mx-auto mt-2 ">
-                                <div class="alert alert-danger collapse" id="mismatch-alert" role="alert">Username or password is not correct. Try again!</div>
-                                <div class="toast mx-auto" id="successtoast" data-delay = "3000" style="z-index: 15;">
-                                                <div class="toast-header">
-                                                        <strong class="mr-auto">Successfull!</strong>
-                                                        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">
-                                                        </button>
-                                                </div>
-                                                <div class="toast-body">
-                                                                Registration Successfull! Please login to continue
-                                                </div>
-                                </div>
-                        </div>
-
-                </div>
                 <div class="row">
                         <div class="col-12">
                                 <div class="card maincard border-bottom-0 mx-auto mt-5" style="max-width: 540px;">
@@ -76,7 +63,9 @@
                                                                         <input name="pass" type="password" class="form-control" id="tool-pass" required data-toggle="tooltip" title="Password mismatch" data-placement="right" trigger="manual" >
 
                                                                 </div>
-                                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                                                <button type="submit" class="btn btn-primary" id="reg-btn">Submit
+                                                                <i class="fas fa-circle-notch fa-spin collapse" id="loading"></i>
+                                                                </button>
                                                         </form>
                                                 </div>
                                         </div>  
@@ -85,7 +74,7 @@
                                         <div class="card regcard border-top-0 mx-auto" style="max-width: 540px;" id="login-card">
                                                 <div class="card-body">
                                                         <h4 class="card-title text-primary">Login</h4><hr>
-                                                        <form class="form-signin" id="loginForm" action="/login" method="POST">
+                                                        <form class="form-signin" id="loginForm">
                                                                 <div class="form-group">
                                                                         <label for="regno">Registration Number</label>
                                                                         <input name="regno" type="text" class="form-control"  required>
@@ -102,6 +91,42 @@
                                 </div>    
                         </div>
                 </div>
+                <div class="row">
+                                <div class="col-12 mx-auto">
+                                        <div class="toast mx-auto" id="successtoast" data-delay = "5000">
+                                                <div class="toast-header bg-success text-light">
+                                                        <strong class="mr-auto">Successfull!</strong>
+                                                        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">
+                                                        </button>
+                                                </div>
+                                                <div class="toast-body">
+                                                                Registration Successfull! Please login to continue
+                                                </div>
+                                        </div>
+                                        <div class="toast mx-auto" id="errortoast" data-delay = "5000">
+                                                        <div class="toast-header bg-danger text-light">
+                                                                <strong class="mr-auto">Error!</strong>
+                                                                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">
+                                                                </button>
+                                                        </div>
+                                                        <div class="toast-body">
+                                                                        Account already exists, please login to continue !
+                                                        </div>
+                                        </div>
+                                        <div class="toast mx-auto" id="passtoast" data-delay = "5000">
+                                                        <div class="toast-header bg-danger text-light">
+                                                                <strong class="mr-auto">Error!</strong>
+                                                                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">
+                                                                </button>
+                                                        </div>
+                                                        <div class="toast-body">
+                                                                        Wrong Password or Username, Please try again!
+                                                        </div>
+                                        </div>
+                                </div>
+        
+                </div>
+
         </div>
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
