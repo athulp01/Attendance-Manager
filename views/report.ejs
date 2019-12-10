@@ -59,11 +59,12 @@
                         <tbody>
                             <% courses.forEach((course, index) => { %>
                             <% course.date_bunked.forEach((day) => { %>
+                            <% if (day != null) { %>
                             <tr>
                                 <td><%= course.name %></td>
                                 <td><%= day.toDateString()%></td>
                             </tr>
-                            <% }) %>
+                            <% }}) %>
                             <% }) %>
                         </tbody>
                     </table>
