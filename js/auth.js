@@ -49,9 +49,11 @@ $('#loginForm').submit((event) => {
         if (res.status == 401) {
           $('#passtoast').toast('show');
           $('#loginForm').trigger('reset');
+          $('#login-btn').text("Submit");
+          $('#login-btn').prop('disabled', false);
         } else {
           let tmp = window.location.href.split('/');
-          window.location.href = `https://${tmp[2]}/u/`;
+          window.location.href = `${tmp[0]}//${tmp[2]}/u/`;
         }
       },
     });
