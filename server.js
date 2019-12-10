@@ -20,15 +20,6 @@ app.use(session({ // cookie with key userID is used
 
 app.set('view engine', 'ejs'); // templating engine
 
-let course_data = [
-  {name: 'Data structures and algorithms',
-    num: 8},
-  {name: 'Electronics Circuits 2',
-    num: 5},
-  {name: 'Economics',
-    num: 10},
-];
-
 let login = function(req, res) {
   model.user.findOne({reg_number: req.body.regno}, (err, result) => {
     if (err) {
@@ -155,7 +146,10 @@ let profile = function(req, res, next) {
 };
 
 let bunk = function(req, res, next) {
-  model.course.updateOne({'Uid': req.session.userID, 'courses.name': req.body.name}, {$inc: {'courses.$.no_bunked': 1}, $push: {'courses.$.date_bunked': new Date()}}, (err, result) => {
+  model.course.updateOne({'Uid': req.session.userID, 'courses.name': req.body.name},
+                                  {$inc: {'courses.$.no_bunked': 1}, 
+                                  $push: {'courses.$.date_bunked': new Date()}}, 
+                                  (err, result) => {
     if (err) {
       console.error(err);
       res.sendStatus(500);
@@ -180,7 +174,9 @@ let logout = function(req, res) {
 };
 
 let removeCourse = function(req, res) {
-  model.course.updateOne({Uid: req.session.userID}, {$pull: {courses: {name: req.body.name}}}, (err, result) => {
+  model.course.updateOne({Uid: req.session.userID},
+                {$pull: {courses: {name: req.body.name}}}, 
+                (err, result) => {
     if (err) {
       console.error(err);
       res.sendStatus(500);
@@ -192,17 +188,33 @@ let removeCourse = function(req, res) {
   });
 };
 
-let editCourse = function(req, res) {
-  model.course.updateOne({'Uid': req.session.userID, 'courses.name': req.body.name}, {$set: {'courses.$.no_bunked': req.body.num}}, (err, result) => {
+let removeDate = function(req, res) {
+  var query = {}
+  query["courses.$.date_bunked."+ req.body.idx] = 1
+
+  model.course.updateOne({'Uid': req.session.userID, 'courses.name': req.body.name},
+                         {$unset: query},
+                         (err, result) => {
     if (err) {
       console.error(err)
       res.sendStatus(500);
     } else if (result == null) {
       res.sendStatus(500);
-    } else {
-      res.sendStatus(200);
     }
   });
+  
+  model.course.updateOne({'Uid': req.session.userID, 'courses.name': req.body.name},
+                        {$pull: {"courses.$.date_bunked":null}, $inc: {"courses.$.no_bunked": -1}},
+                        (err, result) => {
+  if (err) {
+    console.error(err)
+    res.sendStatus(500);
+  } else if (result == null) {
+    res.sendStatus(500);
+  } else {
+    res.sendStatus(200);
+  }
+});
 };
 
 let getReport = function(req, res) {
@@ -217,8 +229,24 @@ let getReport = function(req, res) {
     }
   });
 };
+
+let getDate = function(req, res) {
+  model.course.findOne({Uid: req.session.userID, "courses.name" : req.params.name},
+                {_id: 0, 'courses.$': 1},
+                (err, result) => {
+  if (err) {
+    console.error(err);
+    res.sendStatus(500);
+  } else if (result == null) {
+    res.sendStatus(500);
+  } else {
+    res.json(result)
+  }
+});
+};
+
 let authRoute = express.Router();
-authRoute.use(checkForSession);
+authRoute.use(checkForSession);   //acts as a middleware to authenicate the user for every requests in the /u/* route
 
 app.use('/u', authRoute);
 
@@ -229,16 +257,15 @@ app.post('/register', register);
 
 
 authRoute.get('/', home);
-authRoute.post('/addcourse', addcourse);
 authRoute.get('/profile', profile);
-authRoute.post('/bunk', bunk);
 authRoute.get('/logout', logout);
-authRoute.post('/removecourse', removeCourse);
-authRoute.post('/editcourse', editCourse);
 authRoute.get('/report', getReport);
+authRoute.get('/getdate/:name', getDate);
 
-app.get('/getCookie', (req, res) => {
-  res.send(req.session.userID);
-});
+authRoute.post('/addcourse', addcourse);
+authRoute.post('/bunk', bunk);
+authRoute.post('/removecourse', removeCourse);
+authRoute.post('/removedate', removeDate);
+
 
 app.listen(process.env.PORT||5000);

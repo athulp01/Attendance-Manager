@@ -94,9 +94,9 @@
                 <div class="row">
                         <div class="col-12 mt-5">
                                 <h4>Edit attendance</h4>
-                                <form id="form-edit " onsubmit="editCourse()">
+                                <form id="form-edit">
                                         <div class="input-group">
-                                                <select name = "name" class="form-control" id="course-select-edit">
+                                                <select name ="name" class="form-control" id="course-select-edit">
                                                         <option selected disabled>Select the course which you want to remove</option>
                                                         <% if(locals.courses) { %>
                                                         <% courses.forEach((course)=>{ %>
@@ -106,14 +106,42 @@
                                         </div>
                                         <br>
                                         <div class="form-group form-inline">
-                                                <input name="num" class="form-control" type="number" id="change-num">
-                                                <button type="submit" class="btn btn-info" id="btn-change" disabled>Change</button>
+                                                <button type="button" class="btn btn-info" id="btn-change" onclick="showModal(this)">Change</button>
                                         </div>
                                 </form>
+                        </div>
+                        <div class="col-12 mx-auto">
+                                        <div class="toast mx-auto" id="successtoast" data-delay = "5000">
+                                                <div class="toast-header bg-success text-light">
+                                                        <strong class="mr-auto">Successfull!</strong>
+                                                        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">
+                                                        </button>
+                                                </div>
+                                                <div class="toast-body">
+                                                                Update Successfull!!
+                                                </div>
+                                        </div>
+                        </div>
+                </div>
+                <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" >
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                        <div class="modal-header bg-secondary text-light">
+                                                <h5 class="modal-title" id="modalTitle">Select a Date</h5>
+                                                <button type="button" class="close" data-dismiss="modal"></button>
+                                        </div>
+                                        <div id="dateradio">
+                                        </div>
+                                        <div class="modal-footer mt-1 bg-secondary text-light">
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                                <button type="button" class="btn btn-primary" onclick="edit()">Remove</button>
+                                        </div>
+                                </div>
                         </div>
                 </div>
 
         </div>
+
         <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js" integrity="sha384-3qaqj0lc6sV/qpzrc1N5DC6i1VRn/HyX4qdPaiEFbn54VjQBEU341pvjz7Dv3n6P" crossorigin="anonymous"></script>
