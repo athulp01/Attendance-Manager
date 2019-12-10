@@ -79,7 +79,7 @@
                                 <form id="form-remove">
                                         <div class="input-group">
                                                 <select class="form-control" name="name">
-                                                        <option selected disabled>Select the course which you want to remove</option>
+                                                        <option selected disabled>Select the course</option>
                                                         <% if(locals.courses) { %>
                                                         <% courses.forEach((course)=>{ %>
                                                         <option><%= course.name %></option>
@@ -97,16 +97,14 @@
                                 <form id="form-edit">
                                         <div class="input-group">
                                                 <select name ="name" class="form-control" id="course-select-edit">
-                                                        <option selected disabled>Select the course which you want to remove</option>
+                                                        <option selected disabled>Select the course</option>
                                                         <% if(locals.courses) { %>
                                                         <% courses.forEach((course)=>{ %>
                                                         <option><%= course.name %></option>
                                                         <% }); }%>
                                                 </select>
-                                        </div>
-                                        <br>
-                                        <div class="form-group form-inline">
-                                                <button type="button" class="btn btn-info" id="btn-change" onclick="showModal(this)">Change</button>
+                                                <button type="button" class="btn btn-info" id="btn-change" onclick="showModal(this)">Show dates</button>
+
                                         </div>
                                 </form>
                         </div>

@@ -78,6 +78,7 @@ function edit() {
       success: function(res) {
         $('#modalEdit').modal('hide');
         $('#successtoast').toast('show');
+        window.location.reload()
       }
     })
   });
