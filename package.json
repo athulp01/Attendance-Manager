@@ -1,14 +1,14 @@
 {
-  "name": "amanager",
+  "name": "Attendance-Manager",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A web app to track your academic attendance.",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Athul P",
+  "license": "MIT",
   "dependencies": {
     "body-parser": "^1.19.0",
     "ejs": "^3.0.1",
