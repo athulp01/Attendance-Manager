@@ -18,7 +18,7 @@
 
 ## Install
 First setup a local mongodb server and create a database named amanager, then run
-<img src="http://web.athulp.tech:8000/athulp01.svg?cacheSeconds=10" />
+<img src="http://web.athulp.tech:8000/athulp01.svg?cacheSeconds=10&style=social" />
 
 ```sh
 npm install
